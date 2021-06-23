@@ -22,7 +22,7 @@ def reader():
 def geturl(name):
     name=name.replace(" ","")
     rand=str(random.randrange(0,10**5))
-    st="https://raw.githubusercontent.com/ISTE-NITC-Students-Chapter/QuantumComputingWorkshop/main/Certificates/"+name+rand
+    st="https://github.com/ISTE-NITC-Students-Chapter/QuantumComputingWorkshop/blob/main/Certificates/"+name+rand
     img=pyqrcode.create(st)
     img.png("QRCODES/"+name+rand+".png",scale=6)
     return(name+rand)
