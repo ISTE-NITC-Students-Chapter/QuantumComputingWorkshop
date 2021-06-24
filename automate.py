@@ -4,7 +4,17 @@ import pyqrcode
 import png
 from pyqrcode import QRCode
 import random
+import smtplib
+import imghdr
+from string import Template
+from email.message import EmailMessage
 
+
+
+def read_template(filename):
+    mfile = open(filename)
+    msg = mfile.read()
+    return msg
 
 def reader():
     names=[]
@@ -25,8 +35,9 @@ def geturl(name):
     img.png("QRCODES/"+name+rand+".png",scale=6)
     return(name+rand)
 
-def write(names):
-    for name in names:
+def automate(names,emails):
+    data=[[names[x],emails[x]] for x in range(len(names))]
+    for name,email in data:
         img=Image.open("certificate.png",mode='r')
         width,height=img.width,img.height
         drawer=ImageDraw.Draw(img)
@@ -37,10 +48,36 @@ def write(names):
         qrc=Image.open("QRCODES/"+url+".png")
         img.paste(qrc,(300,1400))
         img.save("Certificates\{}.png".format(url))
+       
+
+        
+        MY_ADDRESS = r'abhishek_b190331ep@nitc.ac.in'
+        PASSWORD = r'14-07-2001'
+
+        s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+        s.starttls()
+        s.login(MY_ADDRESS, PASSWORD)
+
+        
+        msg = EmailMessage()  
+        message = read_template("Body.txt")
+        msg['From'] = MY_ADDRESS
+        msg['To'] = email.rstrip('\n')
+        msg['Subject'] = "Quantum Computing Workshop"
+        msg.set_content(message)
+        with open("Certificates\{}.png".format(url), 'rb') as f:
+            file_data = f.read()
+            file_type = imghdr.what(f.name)
+            file_name = f.name
+        msg.add_attachment(file_data, maintype='image', subtype=file_type, filename=file_name)
+        s.send_message(msg)
+        print("Message sent to", email)
+        del msg
+        s.quit()
         
 def main():
     names,emails=reader()
-    write(names)
+    automate(names,emails)
 
 main()
 
