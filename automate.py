@@ -6,8 +6,6 @@ from pyqrcode import QRCode
 import random
 
 
-
-
 def reader():
     names=[]
     emails=[]
@@ -22,7 +20,7 @@ def reader():
 def geturl(name):
     name=name.replace(" ","")
     rand=str(random.randrange(0,10**5))
-    st="https://github.com/ISTE-NITC-Students-Chapter/QuantumComputingWorkshop/blob/main/Certificates/"+name+rand
+    st=r'https://github.com/ISTE-NITC-Students-Chapter/QuantumComputingWorkshop/blob/main/Certificates/'+name+rand+".png"
     img=pyqrcode.create(st)
     img.png("QRCODES/"+name+rand+".png",scale=6)
     return(name+rand)
@@ -37,7 +35,7 @@ def write(names):
         drawer.text(((width-txt_width)//2,650),name,font=font,fill=(0,0,0,255) )
         url=geturl(name)
         qrc=Image.open("QRCODES/"+url+".png")
-        img.paste(qrc,(300,1500))
+        img.paste(qrc,(300,1400))
         img.save("Certificates\{}.png".format(url))
         
 def main():
@@ -45,3 +43,4 @@ def main():
     write(names)
 
 main()
+
