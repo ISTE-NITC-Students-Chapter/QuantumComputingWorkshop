@@ -48,26 +48,26 @@ def automate(names,emails):
         qrc=Image.open("QRCODES/"+url+".png")
         img.paste(qrc,(300,1500))
         img.save("Certificates\{}.png".format(url))
-        # MY_ADDRESS = r''
-        # PASSWORD = r''
-        # s = smtplib.SMTP(host='smtp.gmail.com', port=587)
-        # s.starttls()
-        # s.login(MY_ADDRESS, PASSWORD)
-        # msg = EmailMessage()  
-        # message = read_template("Body.txt")
-        # msg['From'] = MY_ADDRESS
-        # msg['To'] = email.rstrip('\n')
-        # msg['Subject'] = "Quantum Computing Workshop"
-        # msg.set_content(message)
-        # with open("Certificates\{}.png".format(url), 'rb') as f:
-        #     file_data = f.read()
-        #     file_type = imghdr.what(f.name)
-        #     file_name = f.name
-        # msg.add_attachment(file_data, maintype='image', subtype=file_type, filename=file_name)
-        # s.send_message(msg)
-        # print("Message sent to", email)
-        # del msg
-        # s.quit()
+        MY_ADDRESS = r''
+        PASSWORD = r''
+        s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+        s.starttls()
+        s.login(MY_ADDRESS, PASSWORD)
+        msg = EmailMessage()  
+        message = read_template("Body.txt")
+        msg['From'] = MY_ADDRESS
+        msg['To'] = email.rstrip('\n')
+        msg['Subject'] = "Quantum Computing Workshop"
+        msg.set_content(message)
+        with open("Certificates\{}.png".format(url), 'rb') as f:
+            file_data = f.read()
+            file_type = imghdr.what(f.name)
+            file_name = f.name
+        msg.add_attachment(file_data, maintype='image', subtype=file_type, filename=file_name)
+        s.send_message(msg)
+        print("Message sent to", email)
+        del msg
+        s.quit()
         
 def main():
     names,emails=reader()
