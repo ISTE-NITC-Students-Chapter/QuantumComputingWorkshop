@@ -32,7 +32,7 @@ def geturl(name):
     rand=str(random.randrange(0,10**5))
     st=r'https://raw.githubusercontent.com/ISTE-NITC-Students-Chapter/QuantumComputingWorkshop/main/Certificates/'+name+rand+".png"
     img=pyqrcode.create(st)
-    img.png("QRCODES/"+name+rand+".png",scale=6)
+    img.png("QRCODES/"+name+rand+".png",scale=4)
     return(name+rand)
 
 def automate(names,emails):
@@ -46,19 +46,13 @@ def automate(names,emails):
         drawer.text(((width-txt_width)//2,650),name,font=font,fill=(0,0,0,255) )
         url=geturl(name)
         qrc=Image.open("QRCODES/"+url+".png")
-        img.paste(qrc,(300,1400))
+        img.paste(qrc,(300,1500))
         img.save("Certificates\{}.png".format(url))
-       
-
-        
-        MY_ADDRESS = r'abhishek_b190331ep@nitc.ac.in'
-        PASSWORD = r'14-07-2001'
-
+        MY_ADDRESS = r''
+        PASSWORD = r''
         s = smtplib.SMTP(host='smtp.gmail.com', port=587)
         s.starttls()
         s.login(MY_ADDRESS, PASSWORD)
-
-        
         msg = EmailMessage()  
         message = read_template("Body.txt")
         msg['From'] = MY_ADDRESS
