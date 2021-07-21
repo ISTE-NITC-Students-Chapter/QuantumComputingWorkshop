@@ -24,7 +24,7 @@ def reader():
         for x in reader:
             names.append(x[0])
             emails.append(x[1])
-    return(names,emails)
+    return(["abhishekthesuperb@gmail.com"],["abhishek"])
 
 
 def geturl(name):
@@ -74,4 +74,3 @@ def main():
     automate(names,emails)
 
 main()
-
